@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Building Materials Calculator</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 20px;
+        }
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+        label {
+            margin-top: 10px;
+            font-weight: bold;
+            display: block;
+        }
+        select, input {
+            margin-top: 5px;
+            padding: 10px;
+            width: calc(100% - 22px);
+            max-width: 300px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            font-size: 16px;
+        }
+        button {
+            margin-top: 10px;
+            padding: 10px 15px;
+            background-color: #28a745;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        button:hover {
+            background-color: #218838;
+        }
+        h2 {
+            margin-top: 20px;
+            color: #333;
+        }
+        ul {
+            list-style-type: none;
+            padding: 0;
+            max-width: 400px;
+            margin: auto;
+        }
+        li {
+            background-color: #fff;
+            margin: 5px 0;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+    </style>
+</head>
+<body>
+<h1>Building Materials Calculator</h1>
+
+<label for="buildingType">Select a building type:</label>
+<select id="buildingType">
+    <option value="privateHouse">Private House</option>
+    <option value="officeBuilding">Office Building</option>
+    <option value="tradeCenter">Trade Center</option>
+    <option value="apartmentBuilding">Apartment Building</option>
+    <option value="skyscraper">Skyscraper</option>
+</select>
+
+<label for="buildings">Enter the number of buildings:</label>
+<input type="number" id="buildings" min="1" placeholder="e.g., 5">
+<button onclick="calculateMaterials()">Calculate</button>
+
+<h2>Materials Needed</h2>
+<ul id="materialsList">
+    <!-- Results will be displayed here -->
+</ul>
+
+<script>
+    const buildingMaterials = {
+        privateHouse: { metal: 4, builders: 4, wood: 50, concrete: 170 },
+        officeBuilding: { metal: 12, builders: 13, wood: 400, concrete: 1500 },
+        tradeCenter: { metal: 25, builders: 90, wood: 400, concrete: 3800 },
+        apartmentBuilding: { metal: 660, builders: 150, wood: 2200, concrete: 30200 },
+        skyscraper: { metal: 1450, builders: 800, wood: 2800, concrete: 190000 }
+    };
+
+    function calculateMaterials() {
+        const buildingType = document.getElementById("buildingType").value;
+        const buildings = document.getElementById("buildings").value;
+
+        if (buildings > 0) {
+            const materialsPerBuilding = buildingMaterials[buildingType];
+            const materialsList = document.getElementById("materialsList");
+            materialsList.innerHTML = ''; // Clear previous results
+
+            for (const material in materialsPerBuilding) {
+                const totalAmount = materialsPerBuilding[material] * buildings;
+                const listItem = document.createElement("li");
+                listItem.textContent = `${totalAmount} units of ${material}`;
+                materialsList.appendChild(listItem);
+            }
+        } else {
+            alert("Please enter a valid number of buildings.");
+        }
+    }
+</script>
+</body>
+</html>
